@@ -1,0 +1,20 @@
+﻿@model List<Station>
+
+<h1>Station List</h1>
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>
+            Station Name
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+        @foreach(var station in Model.OrderBy(i=>i.Id))
+        {
+        <tr>
+            <td>@station.Name</td>
+        </tr>
+        }
+    </tbody>
+</table>

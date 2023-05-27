@@ -11,5 +11,7 @@ namespace CityBikeApp.Data
         }  
 
         public DbSet<Station> Stations { get; set; }
+
+        
     }
 }
