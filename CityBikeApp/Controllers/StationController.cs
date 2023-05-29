@@ -16,5 +16,10 @@ namespace CityBikeApp.Controllers
             List<Station> objStationList = _db.Stations.ToList();
             return View(objStationList);
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }
