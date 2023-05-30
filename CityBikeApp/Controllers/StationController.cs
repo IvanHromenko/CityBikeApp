@@ -21,5 +21,41 @@ namespace CityBikeApp.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public IActionResult Create(Station obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Stations.Add(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index", "Station");
+            }
+            return View();
+        }
+
+        public IActionResult Details(int stationId)
+        {
+            if(stationId==null || stationId == 0)
+            {
+                return NotFound();
+            }
+            Station stationFromDB = _db.Stations.Find(stationId);
+            if (stationFromDB == null)
+            {
+                return NotFound();
+            }
+            return View(stationFromDB);
+        }
+
+        #region API CALLS
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            List<Station> objStationList = _db.Stations.ToList();
+            return Json(new {data = objStationList });
+        }
+
+        #endregion
     }
 }

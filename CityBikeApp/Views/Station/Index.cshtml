@@ -12,20 +12,19 @@
         </div>
     </div>
 </div>
-<table class="table table-bordered table-striped">
+<table id="myTable" class="table table-bordered table-striped">
     <thead>
     <tr>
         <th>
             Station Name
         </th>
+            
+        <th></th>
     </tr>
     </thead>
-    <tbody>
-        @foreach(var station in Model.OrderBy(i=>i.Id))
-        {
-        <tr>
-            <td>@station.Name</td>
-        </tr>
-        }
-    </tbody>
+    
 </table>
+
+@section Scripts{
+    <script src="~/js/station.js"></script>
+}

@@ -1,1 +1,23 @@
-﻿<h1>Add New Station</h1>
+﻿@model Station
+
+<form method="post">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Add new station</h2>
+            <hr />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Name" class="pb-0"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary"> Add </button>
+        <a asp-controller="Station" asp-action="Index" class="btn btn-secondary">Back to list</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
