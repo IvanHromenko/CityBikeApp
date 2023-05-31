@@ -1,8 +1,47 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model List<Trip>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+
+<div class="container">
+    <div class="row pt-4 pb-3">
+        <div class="col-6">
+            <h2 class="text-primary">List of Journeys</h2>
+        </div>
+        
+    </div>
 </div>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                Departure Station
+            </th>
+            <th>
+                Return Station
+            </th>
+            <th>
+                Covered distance
+            </th>
+            <th>
+                Duration
+            </th>
+        </tr>
+    </thead>
+   <tbody>
+    @foreach(var obj in Model.Take(10))
+    { 
+    float distanceKm = obj.CoveredDistanceM / 1000;
+    float durationMin = obj.DurationSec / 60;
+
+        <tr>
+            <td>@obj.DepartureStationName</td>
+            <td>@obj.ReturnStationName</td>
+            <td>@distanceKm</td>
+            <td>@durationMin</td>
+        </tr>
+    }
+    </tbody>
+    
+</table>
+
+

@@ -16,7 +16,7 @@ function loadDataTable() {
                 "render": function (data) {
                     return `
                         <div class="w-75">
-                            <a asp-action="Details" asp-route-stationId="${data}"
+                            <a href="/Station/Details?id=${data}"
                             class="btn btn-primary mx-1">
                                 Details
                             </a>

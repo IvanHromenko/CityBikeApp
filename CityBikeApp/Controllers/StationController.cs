@@ -33,13 +33,13 @@ namespace CityBikeApp.Controllers
             return View();
         }
 
-        public IActionResult Details(int stationId)
+        public IActionResult Details(short id)
         {
-            if(stationId==null || stationId == 0)
+            if(id == null || id == 0)
             {
                 return NotFound();
             }
-            Station stationFromDB = _db.Stations.Find(stationId);
+            Station stationFromDB = _db.Stations.Find(id);
             if (stationFromDB == null)
             {
                 return NotFound();
