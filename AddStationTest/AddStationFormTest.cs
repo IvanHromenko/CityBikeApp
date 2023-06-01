@@ -8,7 +8,7 @@ namespace AddStationTest
     public class AddStationFormTest
     {
         private IWebDriver driver;
-        private const string BaseUrl = "https://localhost:7109";
+        private const string BaseUrl = "https://citybiketrips.azurewebsites.net";
 
         [TestInitialize]
         public void TestInitialize() 
