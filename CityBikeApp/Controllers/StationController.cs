@@ -1,19 +1,21 @@
 ﻿using CityBikeApp.Data;
 using CityBikeApp.Models;
+using CityBikeApp.Services;
+using CityBikeApp.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CityBikeApp.Controllers
 {
     public class StationController : Controller
     {
-        private readonly ApplicationDbContext _db;
-        public StationController(ApplicationDbContext db)
+        private readonly IUnitOfWork _unitOfWork;
+        public StationController(IUnitOfWork unitOfWork)
         {
-            _db = db;
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Index()
         {
-            List<Station> objStationList = _db.Stations.ToList();
+            List<Station> objStationList = _unitOfWork.Station.GetAll();
             return View(objStationList);
         }
 
@@ -26,8 +28,8 @@ namespace CityBikeApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Stations.Add(obj);
-                _db.SaveChanges();
+                _unitOfWork.Station.Create(obj);
+                _unitOfWork.Save();
                 return RedirectToAction("Index", "Station");
             }
             return View();
@@ -39,7 +41,7 @@ namespace CityBikeApp.Controllers
             {
                 return NotFound();
             }
-            Station stationFromDB = _db.Stations.Find(id);
+            Station stationFromDB = _unitOfWork.Station.Get(id);
             if (stationFromDB == null)
             {
                 return NotFound();
@@ -52,7 +54,7 @@ namespace CityBikeApp.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            List<Station> objStationList = _db.Stations.ToList();
+            List<Station> objStationList = _unitOfWork.Station.GetAll();
             return Json(new {data = objStationList });
         }
 

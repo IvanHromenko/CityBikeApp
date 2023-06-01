@@ -1,5 +1,6 @@
 ﻿using CityBikeApp.Data;
 using CityBikeApp.Models;
+using CityBikeApp.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -8,18 +9,18 @@ namespace CityBikeApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ApplicationDbContext _db;
+        private readonly IUnitOfWork _unitOfWork;
 
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db)
+        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
         {
             _logger = logger;
-            _db = db;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
         {
-            List<Trip> tripList = _db.Trips.ToList();
+            List<Trip> tripList = _unitOfWork.Trip.GetAll();
             return View(tripList);
         }
 
@@ -33,8 +34,8 @@ namespace CityBikeApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Trips.Add(obj);
-                _db.SaveChanges();
+                _unitOfWork.Trip.Create(obj);
+                _unitOfWork.Save();
                 return RedirectToAction("Index", "Home");
             }
             return View();
@@ -51,7 +52,7 @@ namespace CityBikeApp.Controllers
         [HttpGet]
         public IActionResult GetTrips()
         {
-            List<Trip> objTripList = _db.Trips.ToList();
+            List<Trip> objTripList = _unitOfWork.Trip.GetAll();
             return Json(new { data = objTripList });
         }
 
