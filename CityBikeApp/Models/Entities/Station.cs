@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace CityBikeApp.Models
+namespace CityBikeApp.Models.Entities
 {
     public class Station
     {
@@ -12,7 +12,7 @@ namespace CityBikeApp.Models
         public string Name { get; set; }
         public string Adress { get; set; }
         public short Capacity { get; set; }
-        public Double x { get; set; }
-        public Double y { get; set; }
+        public double x { get; set; }
+        public double y { get; set; }
     }
 }

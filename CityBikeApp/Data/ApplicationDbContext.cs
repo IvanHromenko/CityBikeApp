@@ -1,4 +1,4 @@
-﻿using CityBikeApp.Models;
+﻿using CityBikeApp.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CityBikeApp.Data
