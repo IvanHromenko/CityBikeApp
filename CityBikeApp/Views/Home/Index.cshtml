@@ -1,5 +1,4 @@
-﻿@using CityBikeApp.Models.Entities;
-@model List<Trip>
+﻿@model CityBikeApp.Models.ViewModels.TripsViewModel
 
 
 
@@ -29,20 +28,71 @@
         </tr>
     </thead>
    <tbody>
-    @foreach(var obj in Model.Take(10))
-    { 
-    float distanceKm = obj.CoveredDistanceM / 1000;
-    float durationMin = obj.DurationSec / 60;
+    @foreach(var trip in Model.Trips)
+    {
+            float distanceKm = (float)trip.CoveredDistanceM / 1000;
+            float durationMin = (float)trip.DurationSec / 60;
 
         <tr>
-            <td>@obj.DepartureStationName</td>
-            <td>@obj.ReturnStationName</td>
-            <td>@distanceKm</td>
-            <td>@durationMin</td>
+                <td>@trip.DepartureStationName</td>
+                <td>@trip.ReturnStationName</td>
+                <td>@distanceKm</td>
+                <td>@durationMin</td>
         </tr>
     }
     </tbody>
     
 </table>
+
+@if (Model.TotalPages > 1)
+{
+    <nav>
+        <ul class="pagination">
+            @if (Model.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Index", new {page = Model.CurrentPage - 1})">Previous</a>
+                </li>
+            }
+
+            @if (Model.CurrentPage > 5)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Index", new {page = 1})">1</a>
+                </li>
+                <li class="page-item disabled">
+                    <a class="page-link">...</a>
+                </li>
+            }
+
+            @for (int i = Model.CurrentPage - 4; i <= Model.CurrentPage + 4; i++)
+            {
+                if(i >= 1 && i <= Model.TotalPages)
+                {
+                <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { page = i})">@i</a>
+                </li>
+                }
+            }
+
+            @if (Model.CurrentPage + 4 < Model.TotalPages)
+            {
+                <li class="page-item disabled">
+                    <a class="page-link">...</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Index", new {page = Model.TotalPages})">@Model.TotalPages</a>
+                </li>
+            }
+
+            @if (Model.CurrentPage < Model.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Index", new {page = Model.CurrentPage + 1})">Next</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}
 
 

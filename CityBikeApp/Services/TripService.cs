@@ -15,5 +15,18 @@ namespace CityBikeApp.Services
         {
             return _db.Trips.ToList();
         }
+
+        public List<Trip> GetPagedTrips(int page, int pageSize)
+        {
+            return _db.Trips
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+        }
+        public int GetTotalPages(int pageSize)
+        {
+            int totalRecords = _db.Trips.Count();
+            return (int)Math.Ceiling((double)totalRecords / pageSize);
+        }
     }
 }

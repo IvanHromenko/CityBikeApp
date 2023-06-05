@@ -1,6 +1,7 @@
 ﻿using CityBikeApp.Data;
 using CityBikeApp.Models;
 using CityBikeApp.Models.Entities;
+using CityBikeApp.Models.ViewModels;
 using CityBikeApp.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -19,10 +20,17 @@ namespace CityBikeApp.Controllers
             _tripService = tripService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int page = 1)
         {
-            List<Trip> tripList = _tripService.GetAllTrips();
-            return View(tripList);
+            int pageSize = 10;
+            TripsViewModel viewModel = new TripsViewModel
+            {
+                Trips = _tripService.GetPagedTrips(page, pageSize),
+                CurrentPage = page,
+                TotalPages = _tripService.GetTotalPages(pageSize)
+            };
+            
+            return View(viewModel);
         }
 
 
